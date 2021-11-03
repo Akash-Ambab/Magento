@@ -37,7 +37,7 @@
         <dataProvider class="Ambab\EmiCalculator\Model\AllBanks\DataProvider" name="allbanks_form_data_source">
             <settings>
                 <primaryFieldName>bank_id</primaryFieldName>
-                <requestFieldName>bank_id</requestFieldName>
+                <requestFieldName>id</requestFieldName>
             </settings>
         </dataProvider>
     </dataSource>
@@ -64,14 +64,29 @@
             <item name="source" xsi:type="string">allbanks</item>
             </item>
         </argument>
-    <settings>
-        <validation>
-            <rule name="required-entry" xsi:type="boolean">true</rule>
-        </validation>
-        <dataType>text</dataType>
-        <label translate="true">Bank Name</label>
-        <dataScope>bank_name</dataScope>
-    </settings>
-</field>
+        <settings>
+            <validation>
+                <rule name="required-entry" xsi:type="boolean">true</rule>
+            </validation>
+            <dataType>text</dataType>
+            <label translate="true">Bank Name</label>
+            <dataScope>bank_name</dataScope>
+        </settings>
+    </field>
+    <field name="bank_code" sortOrder="20" formElement="input">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+            <item name="source" xsi:type="string">allbanks</item>
+            </item>
+        </argument>
+        <settings>
+            <validation>
+                <rule name="required-entry" xsi:type="boolean">true</rule>
+            </validation>
+            <dataType>text</dataType>
+            <label translate="true">Bank Name</label>
+            <dataScope>bank_name</dataScope>
+        </settings>
+    </field>
 </fieldset>
 </form>

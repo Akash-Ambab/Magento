@@ -30,4 +30,25 @@
             </argument>
         </arguments>
     </type>
+
+    <virtualType name="AllemiGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Ambab\EmiCalculator\Model\ResourceModel\Allemi\Collection</argument>
+        </arguments>
+    </virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="banks_allemi_listing_data_source" xsi:type="string">Ambab\EmiCalculator\Model\ResourceModel\Allemi\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ambab\EmiCalculator\Model\ResourceModel\Allemi\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ambab_emi_options</argument>
+            <argument name="eventPrefix" xsi:type="string">ambab_emi_options_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">ambab_emi_options_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Ambab\EmiCalculator\Model\ResourceModel\Allemi</argument>
+        </arguments>
+    </type>
 </config>

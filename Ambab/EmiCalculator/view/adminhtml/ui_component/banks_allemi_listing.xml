@@ -3,31 +3,31 @@
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
 		<item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">banks_allbanks_listing.banks_allbanks_listing_data_source</item>
-            <item name="deps" xsi:type="string">banks_allbanks_listing.banks_allbanks_listing_data_source</item>
+            <item name="provider" xsi:type="string">banks_allemi_listing.banks_allemi_listing_data_source</item>
+            <item name="deps" xsi:type="string">banks_allemi_listing.banks_allemi_listing_data_source</item>
         </item>
-        <item name="spinner" xsi:type="string">allbanks_columns</item>
+        <item name="spinner" xsi:type="string">allemi_columns</item>
         <item name="buttons" xsi:type="array">
             <item name="add" xsi:type="array">
                 <item name="name" xsi:type="string">add</item>
-                <item name="label" xsi:type="string" translate="true">Add Bank</item>
+                <item name="label" xsi:type="string" translate="true">Add EMI</item>
                 <item name="class" xsi:type="string">primary</item>
                 <item name="url" xsi:type="string">*/*/new</item>
             </item>
         </item>
     </argument>
-	<dataSource name="banks_allbanks_listing_data_source">
+	<dataSource name="banks_allemi_listing_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">BanksGridDataProvider</argument>
-            <argument name="name" xsi:type="string">banks_allbanks_listing_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string">bank_id</argument>
+            <argument name="class" xsi:type="string">AllemiGridDataProvider</argument>
+            <argument name="name" xsi:type="string">banks_allemi_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">emi_id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
 			<argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
                     <item name="update_url" xsi:type="url" path="mui/index/render"/>
                     <item name="storageConfig" xsi:type="array">
-                        <item name="indexField" xsi:type="string">bank_id</item>
+                        <item name="indexField" xsi:type="string">emi_id</item>
                     </item>
                 </item>
             </argument>
@@ -45,7 +45,7 @@
                         <message translate="true">Are you sure you want to delete selected items?</message>
                         <title translate="true">Delete items</title>
                     </confirm>
-                    <url path="banks/allbanks/massDelete"/>
+                    <url path="banks/allemi/massDelete"/>
                     <type>delete</type>
                     <label translate="true">Delete</label>
                 </settings>
@@ -53,20 +53,20 @@
         </massaction>
 		<paging name="listing_paging"/>
     </listingToolbar>
-	<columns name="allbanks_columns">
+	<columns name="allemi_columns">
 		<settings>
             <editorConfig>
                 <param name="clientConfig" xsi:type="array">
-                    <item name="saveUrl" xsi:type="url" path="banks/allbanks/inlineEdit"/>
+                    <item name="saveUrl" xsi:type="url" path="banks/allemi/inlineEdit"/>
                     <item name="validateBeforeSave" xsi:type="boolean">false</item>
                 </param>
-                <param name="indexField" xsi:type="string">bank_id</param>
+                <param name="indexField" xsi:type="string">emi_id</param>
                 <param name="enabled" xsi:type="boolean">true</param>
-                <param name="selectProvider" xsi:type="string">banks_allbanks_listing.banks_allbanks_listing.allbanks_columns.ids</param>
+                <param name="selectProvider" xsi:type="string">banks_allemi_listing.banks_allemi_listing.allemi_columns.ids</param>
             </editorConfig>
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">banks_allbanks_listing.banks_allbanks_listing.allbanks_columns_editor</item>
+                    <item name="provider" xsi:type="string">banks_allemi_listing.banks_allemi_listing.allemi_columns_editor</item>
                     <item name="target" xsi:type="string">startEdit</item>
                     <item name="params" xsi:type="array">
                         <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
@@ -77,12 +77,12 @@
         </settings>
 		<selectionsColumn name="ids">
             <settings>
-                <indexField>bank_id</indexField>
+                <indexField>emi_id</indexField>
                 <resizeEnabled>false</resizeEnabled>
                 <resizeDefaultWidth>55</resizeDefaultWidth>
             </settings>
         </selectionsColumn>
-        <column name="bank_id">
+        <column name="emi_id">
             <settings>
                 <filter>textRange</filter>
                 <label translate="true">ID</label>
@@ -95,7 +95,7 @@
                 <label translate="true">Bank Code</label>
             </settings>
         </column>
-        <column name="bank_name">
+        <column name="month">
             <settings>
                 <filter>text</filter>
                 <editor>
@@ -104,7 +104,30 @@
                     </validation>
                     <editorType>text</editorType>
                 </editor>
-                <label translate="true">Bank Name</label>
+                <label translate="true">Months</label>
+            </settings>
+        </column>
+        <column name="interest">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Rate Of Interest</label>
+            </settings>
+        </column>
+        <column name="status" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Ambab\EmiCalculator\Model\Allemi\Source\Status"/>
+                <filter>select</filter>
+                <editor>
+                    <editorType>select</editorType>
+                </editor>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
             </settings>
         </column>
 		<column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
@@ -121,9 +144,9 @@
                 <label translate="true">Modified</label>
             </settings>
         </column>
-		<actionsColumn name="actions" class="Ambab\EmiCalculator\Ui\Component\Listing\Column\BankActions">
+		<actionsColumn name="actions" class="Ambab\EmiCalculator\Ui\Component\Listing\Column\AllemiActions">
             <settings>
-                <indexField>bank_id</indexField>
+                <indexField>emi_id</indexField>
                 <resizeEnabled>false</resizeEnabled>
                 <resizeDefaultWidth>107</resizeDefaultWidth>
             </settings>

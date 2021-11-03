@@ -15,7 +15,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     public function __construct(
         $name,
         $primaryFieldName,
-        $requestedFieldName,
+        $requestFieldName,
         CollectionFactory $bankCollectionFactory,
         DataPersistorInterface $dataPersistor,
         array $meta = [],
@@ -23,7 +23,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     ) {
         $this->collection = $bankCollectionFactory->create();
         $this->dataPersistor = $dataPersistor;
-        parent::__construct($name, $primaryFieldName, $requestedFieldName, $meta, $data);
+        parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->meta = $this->prepareMeta($this->meta);
     }
 
@@ -38,6 +38,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         }
 
         $items = $this->collection->getItems();
+
+        print_r($items); exit;
 
         
 

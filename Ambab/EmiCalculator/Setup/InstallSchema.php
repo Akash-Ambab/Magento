@@ -31,6 +31,13 @@ class InstallSchema implements InstallSchemaInterface
                     'Bank Name'
             )
             ->addColumn(
+                'bank_code',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                255,
+                ['nullable' => false, 'primary' => true],
+                    'Bank Code'
+            )
+            ->addColumn(
                 'created_at',
                 \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
                 null,
@@ -45,7 +52,7 @@ class InstallSchema implements InstallSchemaInterface
                     'Updated At'
             )
             ->addIndex(
-                $setup->getIdxName('ambab_banks', ['bank_name']),
+                $setup->getIdxName('ambab_banks', ['bank_name', 'bank_code']),
                 ['bank_name']
             )
             ->setComment("Bank Table");
@@ -76,6 +83,13 @@ class InstallSchema implements InstallSchemaInterface
                     'Bank ID'
             )
             ->addColumn(
+                'bank_code',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                255,
+                ['nullable' => false, 'primary' => true],
+                    'Bank Code'
+            )
+            ->addColumn(
                 'month',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
@@ -88,6 +102,13 @@ class InstallSchema implements InstallSchemaInterface
                 null,
                 ['nullable' => false],
                     'Intrest Rate'
+            )
+            ->addColumn(
+                'status',
+                \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+                null,
+                ['nullable' => false, 'unsigned' => true],
+                  'Status'
             )
             ->addColumn(
                 'created_at',

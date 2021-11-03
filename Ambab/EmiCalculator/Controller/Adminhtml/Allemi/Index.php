@@ -1,5 +1,5 @@
 <?php
-namespace Ambab\EmiCalculator\Controller\Adminhtml\EmiDetails;
+namespace Ambab\EmiCalculator\Controller\Adminhtml\Allemi;
 
 class Index extends \Magento\Backend\App\Action
 {

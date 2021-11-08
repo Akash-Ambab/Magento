@@ -1,3 +1,110 @@
+<?php
+$currentProduct = $block->getCurrentProduct();
+
+$finalPrice = $currentProduct->getFinalPrice();
+$dataCollection = $block->getModelData();
+$onlyBankCode = $block->getOnlyBankCode();
+$emiPlans = $block->getEmiPlans('HDFC')
+
+?>
+
 <?php if($block->isEnabled()): ?>
-    <a href="#">EMI Starts from $45</a>
+    <p id="emiBlock">Emi Starts From</p>
 <?php endif; ?>
+
+<div id="popup-modal">
+    <?php if($currentProduct){
+        echo "<h1>$finalPrice</h1>";
+        foreach ($onlyBankCode->getData() as $data){
+            print_r($data);
+        }
+
+        echo "<br><br>";
+
+        foreach ($emiPlans->getData() as $emi) {
+            print_r($emi);
+        }
+
+        // foreach ($dataCollection->getData() as $data){
+        //     echo '<table>';
+        //     echo '<tr>'.$data["bank_code"].'<tr>';
+        //     echo '<tr>'.$data["interest"].'<tr>';
+        //     echo '</table>';
+        // }
+        // echo $dataCollection->getEmiId();
+    }
+    ?>
+
+    <style>
+        .collapsibleContainer {
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        }
+
+        .collapsibleTab {
+        background: #eee;
+        padding: 1rem;
+        cursor: pointer;
+        font-size: 2rem;
+        font-weight: bold;
+
+            &:first-child {
+                border-bottom: 1px solid #ddd;
+            }
+            &:nth-last-child(2) {
+                border-top: 1px solid #ddd;
+            }
+        }
+
+        .collapsibleContent {
+        padding: 1rem 2rem;
+        }
+    </style>
+
+    <div id="element" class="collapsibleContainer">
+        <div class="collapsibleTab" data-role="collapsible">
+            <div data-role="trigger">
+                <span>Title 1</span>
+            </div>
+        </div>
+        <div class="collapsibleContent" data-role="content">Content 1</div>
+    </div>
+</div>
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'EMI Options',
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            modal(options, $('#popup-modal'));
+            $("#emiBlock").on('click',function() {
+                $("#popup-modal").modal("openModal");
+            });
+        }
+    );
+
+    require([
+        'jquery',
+        'accordion'], function ($) {
+        $("#element").accordion();
+    });
+</script>

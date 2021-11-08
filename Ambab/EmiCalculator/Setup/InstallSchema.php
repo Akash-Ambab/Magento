@@ -10,6 +10,7 @@ class InstallSchema implements InstallSchemaInterface
     
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
+        // $setup->startSetup();
         $newsTableName = $setup->getTable('ambab_banks');
 
         if($setup->getConnection()->isTableExists($newsTableName) != true) {
@@ -20,7 +21,7 @@ class InstallSchema implements InstallSchemaInterface
                 'bank_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                ['identity' => true, 'nullable' => false],
                 'Bank ID'
             )
             ->addColumn(
@@ -52,8 +53,21 @@ class InstallSchema implements InstallSchemaInterface
                     'Updated At'
             )
             ->addIndex(
-                $setup->getIdxName('ambab_banks', ['bank_name', 'bank_code']),
+                $setup->getIdxName(
+                    'ambab_banks',
+                    ['bank_id'],
+                    \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
+                ),
+                ['bank_id'],
+                ['type' => \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE]
+            )
+            ->addIndex(
+                $setup->getIdxName('ambab_banks', ['bank_name']),
                 ['bank_name']
+            )
+            ->addIndex(
+                $setup->getIdxName('ambab_banks', ['bank_code']),
+                ['bank_code']
             )
             ->setComment("Bank Table");
 
@@ -76,17 +90,10 @@ class InstallSchema implements InstallSchemaInterface
                 'Bank ID'
             )
             ->addColumn(
-                'bank_id',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                255,
-                ['nullable' => false, 'default' => ''],
-                    'Bank ID'
-            )
-            ->addColumn(
                 'bank_code',
                 \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                 255,
-                ['nullable' => false, 'primary' => true],
+                ['nullable' => false],
                     'Bank Code'
             )
             ->addColumn(
@@ -124,9 +131,22 @@ class InstallSchema implements InstallSchemaInterface
                 ['nullable' => false],
                     'Updated At'
             )
+            ->addForeignKey(
+                $setup->getFkName(
+                    'ambab_emi_options',
+                    'bank_code',
+                    'ambab_banks',
+                    'bank_code'
+                ),
+                'bank_code',
+                $setup->getTable('ambab_banks'), 
+                'bank_code',
+                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+            )
             ->setComment("Emi Option Table");
 
         $setup->getConnection()->createTable($bankTable);
+        // $setup->endSetup();
         }
         
     }

@@ -33,5 +33,10 @@ class Allemi extends AbstractModel
     {
         return [self::STATUS_ENABLED => __('Enabled'), self::STATUS_DISABLED => __('Disabled')];
     }
+
+    // public function getEmiId() 
+    // {
+    //     return parent::getData();
+    // }
 }
 ?>

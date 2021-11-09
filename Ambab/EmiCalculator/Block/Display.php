@@ -60,6 +60,10 @@ class Display extends \Magento\Framework\View\Element\Template
 		$emiData = $this->Allemi->create();
 		$collection = $emiData->getCollection()
 				->addFieldToFilter('bank_code', array('like' => $bankcode))
+				->setOrder(
+					'month',
+					'asc'
+				)
 				->load();
 		
 		return $collection;
@@ -69,9 +73,18 @@ class Display extends \Magento\Framework\View\Element\Template
 	{
 		$bankname = $this->bank->create();
 		$collection = $bankname->getCollection()
-				->addFieldToFilter('bank_code', array('like' => $bankcode))
+				->addFieldToFilter('bank_code', ['like' => $bankcode])
 				->load();
 		
 		return $collection;
+	}
+
+	public function calculateEmi($price, $roi, $duration)
+	{
+		$roi = $roi / (12 * 100);
+		
+		$emi = ($price * $roi * pow(1 + $roi, $duration)) / (pow(1 + $roi, $duration) - 1);
+		
+		return $emi;
 	}
 }

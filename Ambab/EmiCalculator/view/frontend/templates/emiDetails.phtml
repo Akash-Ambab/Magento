@@ -4,11 +4,9 @@ $currentProduct = $block->getCurrentProduct();
 $finalPrice = $currentProduct->getFinalPrice();
 $dataCollection = $block->getModelData();
 $onlyBankCode = $block->getOnlyBankCode();
-?>
 
-<?php if($block->isEnabled()): ?>
-    <p id="emiBlock">Emi Starts From</p>
-<?php endif; ?>
+$minEmi = [];
+?>
 
 <div id="popup-modal">
 
@@ -27,19 +25,24 @@ $onlyBankCode = $block->getOnlyBankCode();
                         <table id="emitable">
                             <thead>
                                 <tr>
-                                    <th>Months</th>
-                                    <th>Interest</th>
+                                    <th>EMI Plans</th>
+                                    <th>Interest(pa)</th>
                                     <th>Final Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                         <?php foreach ($block->getEmiPlans($bankcode['bank_code'])->getData() as $emi): ?>
-                            
+                            <?php 
+                                $interestAmmount = $block->calculateEmi($finalPrice, $emi['interest'], $emi['month']);
+                                $interestAmmount = ceil($interestAmmount);
+                                $permonth = round($finalPrice / $emi['month'], 2);
+                                array_push($minEmi, $permonth);
+                            ?>
                             <tr>
-                                <td><?php echo $emi['month']; ?></td>
-                                <td><?php echo $emi['interest']; ?></td>
-                                <td><?php echo "1212"; ?></td>
+                                <td><?php echo $permonth . " Rs / ". $emi['month'] . " months"; ?></td>
+                                <td><?php echo ($interestAmmount * $emi['month']) - $finalPrice . " Rs (". $emi['interest']. "%)"; ?></td>
+                                <td><?php echo $interestAmmount * $emi['month'] . " Rs" ?></td>
                             </tr>
                             
                         <?php endforeach; ?>
@@ -50,3 +53,7 @@ $onlyBankCode = $block->getOnlyBankCode();
         </div>
     <?php endif; ?>    
 </div>
+
+<?php if($block->isEnabled()): ?>
+    <p id="emiBlock">Emi Starts From <span><?php echo '<b>'.min($minEmi).' Rs ></b>' ?></span></p>
+<?php endif; ?>

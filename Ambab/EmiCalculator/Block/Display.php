@@ -5,17 +5,21 @@ class Display extends \Magento\Framework\View\Element\Template
 	protected $helper;
 	protected $_registry;
 	protected $Allemi;
+	protected $bank;
+
 	public function __construct(
 		\Magento\Framework\View\Element\Template\Context $context,
 		\Ambab\EmiCalculator\Helper\Data $helperData,
 		\Magento\Framework\Registry $registry,
 		\Ambab\EmiCalculator\Model\AllemiFactory $Allemi,
+		\Ambab\EmiCalculator\Model\BankFactory $bank,
         array $data = []
 		)
 	{
 		$this->helper = $helperData;
 		$this->_registry = $registry;
 		$this->Allemi = $Allemi;
+		$this->bank = $bank;
 		parent::__construct($context, $data);
 	}
 
@@ -55,6 +59,16 @@ class Display extends \Magento\Framework\View\Element\Template
 	{
 		$emiData = $this->Allemi->create();
 		$collection = $emiData->getCollection()
+				->addFieldToFilter('bank_code', array('like' => $bankcode))
+				->load();
+		
+		return $collection;
+	}
+
+	public function getBankName($bankcode) 
+	{
+		$bankname = $this->bank->create();
+		$collection = $bankname->getCollection()
 				->addFieldToFilter('bank_code', array('like' => $bankcode))
 				->load();
 		

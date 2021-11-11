@@ -40,7 +40,7 @@ $minEmi = [];
                                 array_push($minEmi, $permonth);
                             ?>
                             <tr>
-                                <td><?php echo $permonth . " Rs / ". $emi['month'] . " months"; ?></td>
+                                <td><?php echo $permonth . " Rs for ". $emi['month'] . " months"; ?></td>
                                 <td><?php echo ($interestAmmount * $emi['month']) - $finalPrice . " Rs (". $emi['interest']. "%)"; ?></td>
                                 <td><?php echo $interestAmmount * $emi['month'] . " Rs" ?></td>
                             </tr>

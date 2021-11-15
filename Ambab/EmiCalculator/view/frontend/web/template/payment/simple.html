@@ -15,9 +15,11 @@
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
-        <form class="form" id="pay" action="#" name="pay" method="post" >
-            <!-- ko template: 'Ambab_EmiCalculator/payment/payment-form' --><!-- /ko -->
-        </form>
+        <div class="note"> 
+            <a class="action popup-open" data-bind="mageInit: {'Ambab_EmiCalculator/js/popup':{}}" href="#"> 
+                <span><!-- ko i18n: 'EMI Options'--><!-- /ko --></span>     
+            </a> 
+        </div>
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
             <!-- ko template: getTemplate() --><!-- /ko -->
@@ -38,5 +40,6 @@
                 </button>
             </div>
         </div>
+        
     </div>
 </div>

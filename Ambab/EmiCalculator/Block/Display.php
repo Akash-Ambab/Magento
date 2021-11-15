@@ -6,6 +6,7 @@ class Display extends \Magento\Framework\View\Element\Template
 	protected $_registry;
 	protected $Allemi;
 	protected $bank;
+	protected $cart;
 
 	public function __construct(
 		\Magento\Framework\View\Element\Template\Context $context,
@@ -13,6 +14,7 @@ class Display extends \Magento\Framework\View\Element\Template
 		\Magento\Framework\Registry $registry,
 		\Ambab\EmiCalculator\Model\AllemiFactory $Allemi,
 		\Ambab\EmiCalculator\Model\BankFactory $bank,
+		\Magento\Checkout\Model\Cart $cart,
         array $data = []
 		)
 	{
@@ -20,6 +22,7 @@ class Display extends \Magento\Framework\View\Element\Template
 		$this->_registry = $registry;
 		$this->Allemi = $Allemi;
 		$this->bank = $bank;
+		$this->cart = $cart;
 		parent::__construct($context, $data);
 	}
 
@@ -87,4 +90,12 @@ class Display extends \Magento\Framework\View\Element\Template
 		
 		return $emi;
 	}
+
+	public function getSubtotal()
+    {
+        $totals = $this->cart->getQuote()->getTotals();
+
+        $subtotal = $totals['subtotal']['value'];
+        return $subtotal;
+    }
 }

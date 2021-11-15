@@ -63,6 +63,7 @@ class Display extends \Magento\Framework\View\Element\Template
 		$emiData = $this->Allemi->create();
 		$collection = $emiData->getCollection()
 				->addFieldToFilter('bank_code', array('like' => $bankcode))
+				->addFieldToFilter('status', array('eq' => '1'))
 				->setOrder(
 					'month',
 					'asc'

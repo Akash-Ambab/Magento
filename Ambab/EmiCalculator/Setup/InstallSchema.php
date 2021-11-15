@@ -105,8 +105,8 @@ class InstallSchema implements InstallSchemaInterface
             )
             ->addColumn(
                 'interest',
-                \Magento\Framework\DB\Ddl\Table::TYPE_FLOAT,
-                null,
+                \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+                '10,2',
                 ['nullable' => false],
                     'Intrest Rate'
             )

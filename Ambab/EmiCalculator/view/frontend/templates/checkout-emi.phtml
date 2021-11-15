@@ -25,8 +25,9 @@ $minEmi = [];
                         <thead>
                             <tr>
                                 <th>EMI Plans</th>
-                                <th>Interest(pa)</th>
+                                <th>Interest</th>
                                 <th>Final Amount</th>
+                                <th>Select</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,6 +43,7 @@ $minEmi = [];
                             <td><?php echo $permonth . " Rs for ". $emi['month'] . " months"; ?></td>
                             <td><?php echo ($interestAmmount * $emi['month']) - $finalPrice . " Rs (". $emi['interest']. "%)"; ?></td>
                             <td><?php echo $interestAmmount * $emi['month'] . " Rs" ?></td>
+                            <td><button class="selectedemi" id="<?= $emi['emi_id']; ?>">Select This Plan</button></td>
                         </tr>
                         
                     <?php endforeach; ?>

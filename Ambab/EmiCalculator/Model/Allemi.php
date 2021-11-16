@@ -2,8 +2,9 @@
 namespace Ambab\EmiCalculator\Model;
 
 use Magento\Framework\Model\AbstractModel;
+use Ambab\EmiCalculator\Api\Data\AllemiInterface;
 
-class Allemi extends AbstractModel
+class Allemi extends AbstractModel implements AllemiInterface
 {
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 0;

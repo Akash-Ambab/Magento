@@ -16,6 +16,7 @@ class Status implements OptionSourceInterface
     public function toOptionArray()
     {
         $availableOptions = $this->allemi->getAvailableStatuses();
+        
         $options = [];
         foreach ($availableOptions as $key => $value) {
             $options[] = [
@@ -24,6 +25,21 @@ class Status implements OptionSourceInterface
             ];
         }
         return $options;
+    }
+
+    public function getBankCodeArray()
+    {
+        $availableOptions = $this->allemi->getCollection();
+        // $data = $this->allemi->getCollection();
+        // exit;
+        // $options = [];
+        // foreach ($availableOptions as $value) {
+        //     echo $value;
+        // }
+        print_r($availableOptions);
+        exit;
+        // return $options;
+
     }
 }
 ?>

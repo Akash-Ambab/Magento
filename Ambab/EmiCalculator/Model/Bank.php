@@ -43,6 +43,11 @@ class Bank extends AbstractModel implements BankInterface, IdentityInterface
         return $this->getData(self::BANK_NAME);
     }
 
+    public function getBankCode() 
+    {
+        return $this->getData(self::BANK_CODE);
+    }
+
     public function getCreatedAt() 
     {
         return $this->getData(self::CREATED_AT);
@@ -62,6 +67,11 @@ class Bank extends AbstractModel implements BankInterface, IdentityInterface
     public function setBankName($bankName) 
     {
         return $this->setData(self::BANK_NAME, $bankName);
+    }
+
+    public function setBankCode($bankCode) 
+    {
+        return $this->setData(self::BANK_CODE, $bankCode);
     }
 
     public function setCreatedAt($createdAt) 

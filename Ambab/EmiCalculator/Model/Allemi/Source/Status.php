@@ -7,10 +7,15 @@ use Magento\Framework\Data\OptionSourceInterface;
 class Status implements OptionSourceInterface
 {
     protected $allemi;
+    protected $bank;
 
-    public function __construct(\Ambab\EmiCalculator\Model\Allemi $allemi)
+    public function __construct(
+        \Ambab\EmiCalculator\Model\AllemiFactory $allemi,
+        \Ambab\EmiCalculator\Model\BankFactory $bank
+    )
     {
         $this->allemi = $allemi;
+        $this->bank = $bank;
     }
 
     public function toOptionArray()
@@ -27,19 +32,20 @@ class Status implements OptionSourceInterface
         return $options;
     }
 
-    public function getBankCodeArray()
-    {
-        $availableOptions = $this->allemi->getCollection();
-        // $data = $this->allemi->getCollection();
-        // exit;
-        // $options = [];
-        // foreach ($availableOptions as $value) {
-        //     echo $value;
-        // }
-        print_r($availableOptions);
-        exit;
-        // return $options;
+    public function getOnlyBankCode()
+	{
+		$emiData = $this->bank->create();
+		$collection = $emiData->getCollection()
+				->distinct(true)
+				->addFieldToSelect('bank_code')
+				->load();
+        $collection = $collection->getData();
+        $options = [];
+        foreach ($collection as $code) {
+            $options[$code['bank_code']] = $code['bank_code'];
+        }
 
-    }
+		return $options;
+	}
 }
 ?>

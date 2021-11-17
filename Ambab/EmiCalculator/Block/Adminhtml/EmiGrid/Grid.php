@@ -96,23 +96,23 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
             ]
         );
 
-        // $this->addColumn(
-        //     'status',
-        //     [
-        //         'header' => __('Status'),
-        //         'index' => 'status',
-        //         'type' => 'options',
-        //         'options' => $this->_status->toOptionArray(),
-        //     ]
-        // );
-
         $this->addColumn(
-            'created_at',
+            'status',
             [
-                'header' => __('Created At'),
-                'index' => 'created_at',
+                'header' => __('Status'),
+                'index' => 'status',
+                'type' => 'options',
+                'options' => ['1' => __('Active'), '0' => __('Inactive')],
             ]
         );
+
+        // $this->addColumn(
+        //     'created_at',
+        //     [
+        //         'header' => __('Created At'),
+        //         'index' => 'created_at',
+        //     ]
+        // );
 
         $this->addColumn(
             'edit',

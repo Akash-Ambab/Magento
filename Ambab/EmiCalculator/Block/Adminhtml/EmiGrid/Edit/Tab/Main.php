@@ -64,12 +64,13 @@ class Main extends Generic implements TabInterface
 
         $fieldset->addField(
             'bank_code',
-            'text',
+            'select',
             [
                 'label' => __('Bank Code'),
                 'title' => __('Bank Code'),
                 'name' => 'bank_code',
                 'required' => true,
+                'options' => $this->_status->getOnlyBankCode(),
                 'disabled' => $isElementDisabled,
             ]
         );
@@ -78,6 +79,7 @@ class Main extends Generic implements TabInterface
             'month',
             'text',
             [
+                'id' => 'month',
                 'name' => 'month',
                 'label' => __('Months'),
                 'title' => __('Months'),
@@ -100,13 +102,13 @@ class Main extends Generic implements TabInterface
 
         $fieldset->addField(
             'status',
-            'text',
+            'select',
             [
                 'label' => __('Status'),
                 'title' => __('Status'),
                 'name' => 'status',
                 'required' => true,
-                'value' => 1,
+                'options' => ['1' => __('Active'), '0' => __('Inactive')],
                 'disabled' => $isElementDisabled,
             ]
         );

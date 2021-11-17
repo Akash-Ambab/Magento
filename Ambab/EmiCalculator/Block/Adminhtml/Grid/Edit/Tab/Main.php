@@ -66,6 +66,7 @@ class Main extends Generic implements TabInterface
                 'title' => __('Bank Name'),
                 'required' => true,
                 'disabled' => $isElementDisabled,
+                'after_element_html' => '<p style="color: darkred;"><small>' . ' Do not use special characters ' . '</small></p>'
             ]
         );
 
@@ -78,6 +79,7 @@ class Main extends Generic implements TabInterface
                 'title' => __('Bank Code'),
                 'required' => true,
                 'disabled' => $isElementDisabled,
+                'after_element_html' => '<p style="color: darkred;"><small>' . ' Use only 3 to 6 characters only ' . '</small></p>'
             ]
         );
 

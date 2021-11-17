@@ -72,7 +72,8 @@ class Edit extends \Magento\Backend\App\Action
                 return $resultRedirect->setPath('*/*/');
             }
         }
-        $data = $this->adminSession->getFormData(true);
+        $data = $this->adminSession->getFormData();
+
         if (!empty($data)) {
             $model->setData($data);
         }

@@ -85,6 +85,7 @@ class Main extends Generic implements TabInterface
                 'title' => __('Months'),
                 'required' => true,
                 'disabled' => $isElementDisabled,
+                'after_element_html' => '<p style="color: darkred;"><small>' . ' Use only numeric value | month should not be more than 36 months ' . '</small></p>'
             ]
         );
 
@@ -97,6 +98,7 @@ class Main extends Generic implements TabInterface
                 'title' => __('Interest Rate'),
                 'required' => true,
                 'disabled' => $isElementDisabled,
+                'after_element_html' => '<p style="color: darkred;"><small>' . ' Use only numeric value | ROI should not be more than 50% ' . '</small></p>'
             ]
         );
 

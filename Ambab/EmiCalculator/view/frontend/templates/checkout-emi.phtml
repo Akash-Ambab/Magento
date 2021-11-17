@@ -3,6 +3,7 @@
 $blockObj= $block->getLayout()->createBlock('Ambab\EmiCalculator\Block\Display');
 
 $finalPrice = $blockObj->getSubtotal();
+$isEnable = $blockObj->isEnabled();
 $dataCollection = $blockObj->getModelData();
 $onlyBankCode = $blockObj->getOnlyBankCode();
 
@@ -10,46 +11,52 @@ $minEmi = [];
 
 ?>
 
-<div id="popup" style="display: none;"> 
-    <div id="element" class="collapsibleContainer" data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": false}}'>
-        <?php foreach ($onlyBankCode->getData() as $bankcode): ?>
-            <div class="collapsibleTab" data-role="collapsible">
-                <div data-role="trigger">
-                    <?php foreach ($blockObj->getBankName($bankcode['bank_code']) as $bankName): ?>
-                        <span><?php echo $bankName['bank_name']; ?></span>
-                    <?php endforeach; ?>
+<div id="popup" style="display: none;">
+    <?php if($isEnable): ?>
+        <div id="element" class="collapsibleContainer" data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": false}}'>
+            <?php foreach ($onlyBankCode->getData() as $bankcode): ?>
+                <div class="collapsibleTab" data-role="collapsible">
+                    <div data-role="trigger">
+                        <?php foreach ($blockObj->getBankName($bankcode['bank_code']) as $bankName): ?>
+                            <span><?php echo $bankName['bank_name']; ?></span>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
-            <div class="collapsibleContent" data-role="content">
-                    <table id="emitable">
-                        <thead>
-                            <tr>
-                                <th>EMI Plans</th>
-                                <th>Interest</th>
-                                <th>Final Amount</th>
-                                <th>Select</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <div class="collapsibleContent" data-role="content">
+                        <table id="emitable">
+                            <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th>EMI Plans</th>
+                                    <th>Interest</th>
+                                    <th>Final Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    <?php foreach ($blockObj->getEmiPlans($bankcode['bank_code'])->getData() as $emi): ?>
-                        <?php 
-                            $interestAmmount = $blockObj->calculateEmi($finalPrice, $emi['interest'], $emi['month']);
-                            $interestAmmount = ceil($interestAmmount);
-                            $permonth = round($finalPrice / $emi['month'], 2);
-                            array_push($minEmi, $permonth);
-                        ?>
-                        <tr>
-                            <td><?php echo $permonth . " Rs for ". $emi['month'] . " months"; ?></td>
-                            <td><?php echo ($interestAmmount * $emi['month']) - $finalPrice . " Rs (". $emi['interest']. "%)"; ?></td>
-                            <td><?php echo $interestAmmount * $emi['month'] . " Rs" ?></td>
-                            <td><button class="selectedemi" id="<?= $emi['emi_id']; ?>">Select This Plan</button></td>
-                        </tr>
-                        
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        <?php endforeach; ?>
-    </div>
+                        <?php foreach ($blockObj->getEmiPlans($bankcode['bank_code'])->getData() as $emi): ?>
+                            <?php 
+                                $interestAmmount = $blockObj->calculateEmi($finalPrice, $emi['interest'], $emi['month']);
+                                $interestAmmount = ceil($interestAmmount);
+                                $permonth = round($finalPrice / $emi['month'], 2);
+                                array_push($minEmi, $permonth);
+                            ?>
+                            <tr>
+                                <td style="text-align: center;"><input type="radio" name="emiplan" id=""></td>
+                                <td><?php echo $permonth . " Rs for ". $emi['month'] . " months"; ?></td>
+                                <td><?php echo ($interestAmmount * $emi['month']) - $finalPrice . " Rs (". $emi['interest']. "%)"; ?></td>
+                                <td><?php echo $interestAmmount * $emi['month'] . " Rs" ?></td>
+                            </tr>
+                            
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <div id="emiNotAvailable">
+            <h3 style="text-align: center;">EMI Option Not Avaliable For This Product</h3>
+        </div>
+    <?php endif; ?>
 </div>

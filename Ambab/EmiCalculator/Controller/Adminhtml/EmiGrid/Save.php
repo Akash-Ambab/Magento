@@ -50,7 +50,27 @@ class Save extends \Magento\Backend\App\Action
                 $model->load($id);
             }
 
-            $model->setData($data);
+            function safeInput($input)
+            {
+                $input = htmlspecialchars($input);
+                $input = stripslashes($input);
+                $input = trim($input);
+                return $input;
+            }
+
+            $formkey = safeInput($data['form_key']);
+            $bankcode = safeInput($data['bank_code']);
+            $month = safeInput($data['month']);
+            $interest = safeInput($data['interest']);
+            $status = safeInput($data['status']);
+
+            $validateData['form_key'] = $formkey;
+            $validateData['bank_code'] = strtoupper($bankcode);
+            $validateData['month'] = $month;
+            $validateData['interest'] = $interest;
+            $validateData['status'] = $status;
+
+            $model->setData($validateData);
 
             try {
                 $model->save();
@@ -68,7 +88,7 @@ class Save extends \Magento\Backend\App\Action
                 $this->messageManager->addException($e, __('Something went wrong while saving the data.'));
             }
 
-            $this->_getSession()->setFormData($data);
+            $this->_getSession()->setFormData($validateData);
             return $resultRedirect->setPath('*/*/edit', ['id' => $this->getRequest()->getParam('id')]);
         }
         return $resultRedirect->setPath('*/*/');

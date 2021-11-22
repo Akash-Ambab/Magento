@@ -53,6 +53,7 @@ class Display extends \Magento\Framework\View\Element\Template
 		$collection = $emiData->getCollection()
 				->distinct(true)
 				->addFieldToSelect('bank_code')
+				->addFieldToFilter('status', array('eq' => '1'))
 				->load();
 		
 		return $collection;

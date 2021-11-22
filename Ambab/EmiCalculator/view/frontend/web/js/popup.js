@@ -24,7 +24,7 @@
                 title: $.mage.__('Emi Details'), 
                 modalClass: 'popup', 
                 buttons: [{ 
-                   text: $.mage.__('Yes, I got you!'), 
+                   text: $.mage.__('Submit'), 
                    class: '', 
                    click: function () { 
                       this.closeModal(); 

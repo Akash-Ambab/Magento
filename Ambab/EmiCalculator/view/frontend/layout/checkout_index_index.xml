@@ -1,6 +1,5 @@
-<?xml version="1.0" ?>
-<pagepage layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <css src="Ambab_EmiCalculator::css/style.css" />
     </head>
@@ -17,15 +16,14 @@
                                             <item name="children" xsi:type="array">
                                                 <item name="payment" xsi:type="array">
                                                     <item name="children" xsi:type="array">
-                                                        <item name="renders" xsi:type="array">
+                                                        <item name="afterMethods" xsi:type="array">
                                                             <item name="children" xsi:type="array">
-                                                                <item name="offline-payments" xsi:type="array">
-                                                                    <item name="component" xsi:type="string">Ambab_EmiCalculator/js/view/payment/simple</item>
-                                                                    <item name="methods" xsi:type="array">
-                                                                        <item name="simple" xsi:type="array">
-                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
-                                                                        </item>
-                                                                    </item>
+                                                                <item name="emiOption" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Ambab_EmiCalculator/js/view/payment/emiOption</item>
+                                                                    <item name="displayArea" xsi:type="string">before-place-order</item>
+                                                                    <item name="sortOrder" xsi:type="string">3</item>
+                                                                    <item name="dataScope" xsi:type="string">checkoutcomments</item>
+                                                                    <item name="provider" xsi:type="string">checkoutProvider</item>
                                                                 </item>
                                                             </item>
                                                         </item>
@@ -43,13 +41,8 @@
         </referenceBlock>
 
         <referenceContainer name="content"> 
-            <block class="Magento\Framework\View\Element\Template" name="popup" template="Ambab_EmiCalculator::checkout-emi.phtml" after="-"> 
-                <block class="Magento\Cms\Block\Block" name="popup-content"> 
-                    <arguments> 
-                        <argument name="block_id" xsi:type="string">popup-content</argument> 
-                    </arguments> 
-                </block> 
+            <block class="Magento\Framework\View\Element\Template" name="popup" template="Ambab_EmiCalculator::checkout-emi.phtml" after="-">
             </block> 
         </referenceContainer>
     </body>
-</pagepage>
+</page>

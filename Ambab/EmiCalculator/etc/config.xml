@@ -6,16 +6,5 @@
                 <enable>1</enable>
             </module_control>
         </emi_control>
-
-        <payment>
-            <simple>
-                <active>1</active>
-                <model>Ambab\EmiCalculator\Model\Payment\Simple</model>
-                <order_status>pending</order_status>
-                <title>EMI Option</title>
-                <allowspecific>0</allowspecific>
-                <group>Offline</group>
-            </simple>
-        </payment>
     </default>
 </config>

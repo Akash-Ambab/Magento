@@ -1,4 +1,4 @@
-;define( 
+define( 
     [ 
       'jquery', 
       'Magento_Ui/js/modal/modal' 
@@ -20,7 +20,8 @@
               var options = { 
                 type: 'popup', 
                 responsive: true, 
-                clickableOverlay: false, 
+                innerScroll: true,
+               //  clickableOverlay: false,
                 title: $.mage.__('Emi Details'), 
                 modalClass: 'popup', 
                 buttons: [{ 

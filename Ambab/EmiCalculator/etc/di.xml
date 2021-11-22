@@ -43,4 +43,12 @@
             <argument name="resourceModel" xsi:type="string">Ambab\EmiCalculator\Model\ResourceModel\Allemi</argument>
         </arguments>
     </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="ambab_emicalculator_configprovider" xsi:type="object">Ambab\EmiCalculator\Model\HelloConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

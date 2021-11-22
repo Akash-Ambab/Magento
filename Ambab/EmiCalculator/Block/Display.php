@@ -93,11 +93,11 @@ class Display extends \Magento\Framework\View\Element\Template
 		return $emi;
 	}
 
-	public function getSubtotal()
+	public function getGrandTotal()
     {
         $totals = $this->cart->getQuote()->getTotals();
 
-        $subtotal = $totals['subtotal']['value'];
-        return $subtotal;
+        $grand_total = $totals['grand_total']['value'] - $this->cart->getShippingAmount();
+        return $grand_total;
     }
 }

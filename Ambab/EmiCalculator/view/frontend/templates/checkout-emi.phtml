@@ -2,7 +2,7 @@
 
 $blockObj= $block->getLayout()->createBlock('Ambab\EmiCalculator\Block\Display');
 
-$finalPrice = $blockObj->getSubtotal();
+$finalPrice = $blockObj->getGrandTotal();
 $isEnable = $blockObj->isEnabled();
 $dataCollection = $blockObj->getModelData();
 $onlyBankCode = $blockObj->getOnlyBankCode();

@@ -81,6 +81,7 @@ class Main extends Generic implements TabInterface
             [
                 'id' => 'month',
                 'name' => 'month',
+                'class' => 'validate-number',
                 'label' => __('Months'),
                 'title' => __('Months'),
                 'required' => true,
@@ -94,6 +95,7 @@ class Main extends Generic implements TabInterface
             'text',
             [
                 'name' => 'interest',
+                'class' => 'validate-number',
                 'label' => __('Interest Rate'),
                 'title' => __('Interest Rate'),
                 'required' => true,

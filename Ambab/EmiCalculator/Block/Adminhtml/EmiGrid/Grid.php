@@ -106,14 +106,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
             ]
         );
 
-        // $this->addColumn(
-        //     'created_at',
-        //     [
-        //         'header' => __('Created At'),
-        //         'index' => 'created_at',
-        //     ]
-        // );
-
         $this->addColumn(
             'edit',
             [

@@ -49,7 +49,7 @@ class EmiGrid extends \Magento\Backend\Block\Widget\Container
     {
 
         $splitButtonOptions[] = [
-            'label' => __('Add New'),
+            'label' => __('Add Bank'),
             'onclick' => "setLocation('" . $this->_getCreateUrl() . "')",
         ];
         return $splitButtonOptions;

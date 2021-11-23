@@ -55,6 +55,8 @@ class Display extends \Magento\Framework\View\Element\Template
 				->addFieldToSelect('bank_code')
 				->addFieldToFilter('status', array('eq' => '1'))
 				->load();
+
+		$collection = $collection->getData();
 		
 		return $collection;
 	}
@@ -71,6 +73,12 @@ class Display extends \Magento\Framework\View\Element\Template
 				)
 				->load();
 		
+		$collection = $collection->getData();
+
+		// echo "<pre>";
+		// print_r(json_encode($collection, JSON_PRETTY_PRINT));
+		// exit;
+
 		return $collection;
 	}
 
@@ -79,6 +87,7 @@ class Display extends \Magento\Framework\View\Element\Template
 		$bankname = $this->bank->create();
 		$collection = $bankname->getCollection()
 				->addFieldToFilter('bank_code', ['like' => $bankcode])
+				->distinct(true)
 				->load();
 		
 		return $collection;
@@ -100,4 +109,26 @@ class Display extends \Magento\Framework\View\Element\Template
         $grand_total = $totals['grand_total']['value'] - $this->cart->getShippingAmount();
         return $grand_total;
     }
+
+	public function getJsonData()
+	{
+		$jsonData = [];
+
+		foreach($this->getOnlyBankCode() as $BankCode) {
+			$jsonData['getOnlyBankCode'][] = $BankCode['bank_code'];
+			$abc = $this->getBankName($BankCode);
+			foreach ($abc as $a) {
+				$jsonData['BankNameTest'][$a['bank_code']] = $a['bank_name'];
+			}
+
+			$emi = $this->getEmiPlans($BankCode);
+
+			foreach($emi as $b) {
+				$jsonData['EMI_Plan'][$b['bank_code']][] = $b;
+			}
+		}
+
+		return $jsonData;
+
+	}
 }

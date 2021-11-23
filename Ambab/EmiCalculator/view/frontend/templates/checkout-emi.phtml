@@ -14,7 +14,7 @@ $minEmi = [];
 <div id="popup" style="display: none;">
     <?php if($isEnable): ?>
         <div id="element" class="collapsibleContainer" data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": false}}'>
-            <?php foreach ($onlyBankCode->getData() as $bankcode): ?>
+            <?php foreach ($onlyBankCode as $bankcode): ?>
                 <div class="collapsibleTab" data-role="collapsible">
                     <div data-role="trigger">
                         <?php foreach ($blockObj->getBankName($bankcode['bank_code']) as $bankName): ?>
@@ -34,7 +34,7 @@ $minEmi = [];
                             </thead>
                             <tbody>
 
-                        <?php foreach ($blockObj->getEmiPlans($bankcode['bank_code'])->getData() as $emi): ?>
+                        <?php foreach ($blockObj->getEmiPlans($bankcode['bank_code']) as $emi): ?>
                             <?php 
                                 $interestAmmount = $blockObj->calculateEmi($finalPrice, $emi['interest'], $emi['month']);
                                 $interestAmmount = ceil($interestAmmount);

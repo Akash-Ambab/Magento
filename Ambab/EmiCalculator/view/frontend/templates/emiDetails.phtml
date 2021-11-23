@@ -4,56 +4,114 @@ $currentProduct = $block->getCurrentProduct();
 $finalPrice = $currentProduct->getFinalPrice();
 $dataCollection = $block->getModelData();
 $onlyBankCode = $block->getOnlyBankCode();
+// $block->test();
 
-$minEmi = [];
+// $minEmi = [];
 ?>
 
 <div id="popup-modal">
+    <div id="json_out">
 
-    <?php if($currentProduct): ?>
-        <h1><?php $finalPrice; ?></h1>
-        <div id="element" class="collapsibleContainer" data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": true}}'>
-            <?php foreach ($onlyBankCode->getData() as $bankcode): ?>
-                <div class="collapsibleTab" data-role="collapsible">
-                    <div data-role="trigger">
-                        <?php foreach ($block->getBankName($bankcode['bank_code']) as $bankName): ?>
-                            <span><?php echo $bankName['bank_name']; ?></span>
-                        <?php endforeach; ?>
-                    </div>
+    </div>
+    <div id="element" class="collapsibleContainer" data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": true}}'>
+            <div class="collapsibleTab" data-role="collapsible">
+                <div data-role="trigger">
+                        <span>Test</span>
                 </div>
-                <div class="collapsibleContent" data-role="content">
-                        <table id="emitable">
-                            <thead>
-                                <tr>
-                                    <th>EMI Plans</th>
-                                    <th>Interest(pa)</th>
-                                    <th>Final Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                        <?php foreach ($block->getEmiPlans($bankcode['bank_code'])->getData() as $emi): ?>
-                            <?php 
-                                $interestAmmount = $block->calculateEmi($finalPrice, $emi['interest'], $emi['month']);
-                                $interestAmmount = ceil($interestAmmount);
-                                $permonth = round($finalPrice / $emi['month'], 2);
-                                array_push($minEmi, $permonth);
-                            ?>
-                            <tr>
-                                <td><?php echo $permonth . " Rs for ". $emi['month'] . " months"; ?></td>
-                                <td><?php echo ($interestAmmount * $emi['month']) - $finalPrice . " Rs (". $emi['interest']. "%)"; ?></td>
-                                <td><?php echo $interestAmmount * $emi['month'] . " Rs" ?></td>
-                            </tr>
-                            
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>    
+            </div>
+            <div class="collapsibleContent" data-role="content">
+                <table id="emitable">
+                    <thead>
+                        <tr>
+                            <th>EMI Plans</th>
+                            <th>Interest(pa)</th>
+                            <th>Final Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: test">
+                        
+                        <tr>
+                            <td data-bind="text: emiplan"></td>
+                            <td>Test</td>
+                            <td>Test</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div> 
 </div>
 
 <?php if($block->isEnabled()): ?>
-    <p id="emiBlock">Emi Starts From <span><?php echo '<b>'.min($minEmi).' Rs ></b>' ?></span></p>
+    <p id="emiBlock">Emi Starts From</p>
 <?php endif; ?>
+
+<script>
+    require(
+        [
+            'jquery'
+        ],
+        function (
+            $
+        ) {
+            $('body').on('click', '#emiBlock', function () {
+ 
+                // var self = $(this);
+                var url = "<?php echo $block->getUrl() . 'emidetails/index/JsonData' ?>";
+                // console.log(url);
+                try {
+ 
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        dataType: 'json',
+                        // showLoader: true,
+                        success: function (data) {
+                            // data = json_decode(data);
+                            
+                            let bankNames = data['BankNameTest'];
+                            
+                            // for(let i in data) {
+                                //     bankName.push([i, data[i]])
+                                // }
+                                
+                                // alert(var_dump(bankNames.HDFC));
+                            let bankCodes = data['getOnlyBankCode'];
+                            // $('#json_out').text(bankCodes);
+                            let emiPlans = data['EMI_Plan'];
+
+                            test = ko.applyBindings({
+                                test: 
+                            });
+                            var ViewModel = function () {
+                                this.test = ko.observableArray([
+                                    { emiplan: 'Bert' },
+                                    { emiplan: 'Charles' },
+                                    { emiplan: 'Denise' }
+                                ]); 
+                                };
+                                    
+                                $(function () {
+                                ko.applyBindings(new ViewModel());
+                                });
+                            // for(a of data.getOnlyBankCode) {
+                            //     $('#json_out').text(a)
+                            // }
+                            // $('#json_out').text();
+                            // alert(var_dump(JSON.stringify(data.EMI_Plan.AXIS)));
+                            // // foreach(data.EMI_Plan.AXIS as a) {
+                            // //     console.log(a);
+                            // // }
+
+                            // const test = JSON.parse(data);
+                            // alert();
+                            // foreach(test as a) {
+
+                            // }
+                        }
+                    });
+                } catch (e) {
+                }
+ 
+            });
+        });
+</script>

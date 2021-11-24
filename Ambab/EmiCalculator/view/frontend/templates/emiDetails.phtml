@@ -16,7 +16,9 @@ $onlyBankCode = $block->getOnlyBankCode();
     <div id="element" class="collapsibleContainer" data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": true}}'>
             <div class="collapsibleTab" data-role="collapsible">
                 <div data-role="trigger">
-                        <span>Test</span>
+                    <!-- ko foreach: bankNameObservable() -->
+                        <span data-bind="text: code"></span>
+                    <!-- /ko -->
                 </div>
             </div>
             <div class="collapsibleContent" data-role="content">
@@ -28,10 +30,10 @@ $onlyBankCode = $block->getOnlyBankCode();
                             <th>Final Amount</th>
                         </tr>
                     </thead>
-                    <tbody data-bind="foreach: test">
+                    <tbody>
                         
                         <tr>
-                            <td data-bind="text: emiplan"></td>
+                            <td>Test</td>
                             <td>Test</td>
                             <td>Test</td>
                         </tr>
@@ -46,72 +48,93 @@ $onlyBankCode = $block->getOnlyBankCode();
 <?php endif; ?>
 
 <script>
-    require(
-        [
-            'jquery'
-        ],
-        function (
-            $
-        ) {
-            $('body').on('click', '#emiBlock', function () {
- 
-                // var self = $(this);
-                var url = "<?php echo $block->getUrl() . 'emidetails/index/JsonData' ?>";
-                // console.log(url);
-                try {
- 
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        dataType: 'json',
-                        // showLoader: true,
-                        success: function (data) {
-                            // data = json_decode(data);
-                            
-                            let bankNames = data['BankNameTest'];
-                            
-                            // for(let i in data) {
-                                //     bankName.push([i, data[i]])
-                                // }
-                                
-                                // alert(var_dump(bankNames.HDFC));
-                            let bankCodes = data['getOnlyBankCode'];
-                            // $('#json_out').text(bankCodes);
-                            let emiPlans = data['EMI_Plan'];
 
-                            test = ko.applyBindings({
-                                test: 
-                            });
-                            var ViewModel = function () {
-                                this.test = ko.observableArray([
-                                    { emiplan: 'Bert' },
-                                    { emiplan: 'Charles' },
-                                    { emiplan: 'Denise' }
-                                ]); 
-                                };
-                                    
-                                $(function () {
-                                ko.applyBindings(new ViewModel());
-                                });
-                            // for(a of data.getOnlyBankCode) {
-                            //     $('#json_out').text(a)
-                            // }
-                            // $('#json_out').text();
-                            // alert(var_dump(JSON.stringify(data.EMI_Plan.AXIS)));
-                            // // foreach(data.EMI_Plan.AXIS as a) {
-                            // //     console.log(a);
-                            // // }
+require(
+    [
+        'jquery',
+        'ko'
+    ],
+    function ($, ko) 
+    {
+        $('body').on('click', '#emiBlock', function () {
 
-                            // const test = JSON.parse(data);
-                            // alert();
-                            // foreach(test as a) {
+            // var self = $(this);
+            var url = "<?php echo $block->getUrl() . 'emidetails/index/JsonData' ?>";
+            // console.log(url);
+            try {
 
-                            // }
-                        }
-                    });
-                } catch (e) {
-                }
- 
-            });
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: 'json',
+                    // showLoader: true,
+                    success: function (data) {
+
+                        let bankNames = data['BankNameTest'];
+                        let bankCodes = data['getOnlyBankCode'];
+                        let emiPlans = data['EMI_Plan'];
+                        getValues(bankNames, bankCodes, emiPlans);
+                        // getBankFullName(bankcode)
+                        getBankFullName(bankCodes);
+                        ko.applyBindings(new TestViewModel());
+                        // test();
+                        // let test = bankNames.map(a => console.log(a))
+
+                        // console.log(bankNames);
+                    }
+                });
+            } 
+            catch (e) {}
+
         });
+
+        // let bankNameObservable = ko.observableArray([]);
+        // let emiPlanObservable = ko.observableArray([]);
+
+        function getValues(bankNames, bankCodes, emiPlans) {
+            this.bankNames = bankNames;
+            this.bankCodes = bankCodes;
+            this.emiPlans = emiPlans;
+        }
+
+        function getBankFullName(bankCodes) {
+            bankCodes.map(code => getBankDetails(code))
+        }
+
+        function getBankDetails(code) {
+            // console.log(this.bankNames[code]);
+            // console.log(this.emiPlans[code]);
+            // $('.bankname').html(this.bankNames[code]);
+            bankNameObservable.push({
+                code: this.bankNames[code]
+            })
+
+            // console.log(bankNameObservable());
+
+            emiPlanObservable.push({
+                plan: this.emiPlans[code]
+            })
+
+            // console.log(emiPlanObservable);
+        }
+
+
+
+        function TestViewModel() {
+            var self = this;
+            self.bankNameObservable = ko.observableArray([]);
+            // self.emiPlanObservable = ko.observableArray([]);
+            // console.log(bankNameObservable()[0]);
+            // self.banks = bankNameObservable();
+            // self.plans = emiPlanObservable();
+
+            return self.bankNameObservable;
+        }
+
+        // function test() {
+        //     console.log(bankNameObservable());
+        // }
+    }
+);
+
 </script>

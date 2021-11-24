@@ -116,15 +116,15 @@ class Display extends \Magento\Framework\View\Element\Template
 
 		foreach($this->getOnlyBankCode() as $BankCode) {
 			$jsonData['getOnlyBankCode'][] = $BankCode['bank_code'];
-			$abc = $this->getBankName($BankCode);
-			foreach ($abc as $a) {
-				$jsonData['BankNameTest'][$a['bank_code']] = $a['bank_name'];
+			$banks = $this->getBankName($BankCode);
+			foreach ($banks as $bank) {
+				$jsonData['BankNameTest'][$bank['bank_code']] = $bank['bank_name'];
 			}
 
-			$emi = $this->getEmiPlans($BankCode);
+			$plans = $this->getEmiPlans($BankCode);
 
-			foreach($emi as $b) {
-				$jsonData['EMI_Plan'][$b['bank_code']][] = $b;
+			foreach($plans as $plan) {
+				$jsonData['EMI_Plan'][$plan['bank_code']][] = $plan;
 			}
 		}
 

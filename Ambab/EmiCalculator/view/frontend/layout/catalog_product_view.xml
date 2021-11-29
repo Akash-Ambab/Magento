@@ -7,4 +7,8 @@
     <referenceBlock name="product.info.main">
         <block class="Ambab\EmiCalculator\Block\Display" after="product.info.price" name="product.emi.info" template="Ambab_EmiCalculator::emiDetails.phtml" />
     </referenceBlock>
+
+    <referenceBlock name="category.products.list">
+        <block class="Ambab\EmiCalculator\Block\Display" name="product.emi.test" template="Ambab_EmiCalculator::emiDetails.phtml" />
+    </referenceBlock>
 </page>

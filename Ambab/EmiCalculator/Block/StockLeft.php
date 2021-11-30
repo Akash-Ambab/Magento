@@ -12,6 +12,7 @@ use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Registry;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
+use Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku;
 /**
  * Class StockLeft
  */
@@ -29,6 +30,8 @@ class StockLeft extends Template
     /** @var session  */
     private $stockRegistry;
 
+    private $getSalableQuantityDataBySku;
+
     /**
      * StockLeft constructor.
      * @param Context $context
@@ -43,6 +46,7 @@ class StockLeft extends Template
         Product $product,
         SessionManagerInterface $session,
         StockRegistryInterface $stockRegistry,
+        GetSalableQuantityDataBySku $getSalableQuantityDataBySku,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -50,6 +54,7 @@ class StockLeft extends Template
         $this->_Product = $product;
         $this->session = $session;
         $this->stockRegistry = $stockRegistry;
+        $this->getSalableQuantityDataBySku = $getSalableQuantityDataBySku;
     }
 
     /**
@@ -58,6 +63,11 @@ class StockLeft extends Template
     public function getRemainingQty($productId) {
         $stock = $this->stockRegistry->getStockItem($productId);
         return $stock->getQty();
+    }
+
+    public function getProductSalableQty($sku) {
+        $salable = $this->getSalableQuantityDataBySku->execute($sku);
+        return $salable[0]['qty'];
     }
 
     /**

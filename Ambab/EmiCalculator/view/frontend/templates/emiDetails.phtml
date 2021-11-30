@@ -16,9 +16,7 @@ $onlyBankCode = $block->getOnlyBankCode();
     <div id="element" class="collapsibleContainer" data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": true}}'>
             <div class="collapsibleTab" data-role="collapsible">
                 <div data-role="trigger">
-                    <!-- ko foreach: bankNameObservable() -->
-                        <span data-bind="text: code"></span>
-                    <!-- /ko -->
+                        <span></span>
                 </div>
             </div>
             <div class="collapsibleContent" data-role="content">
@@ -76,7 +74,7 @@ require(
                         getValues(bankNames, bankCodes, emiPlans);
                         // getBankFullName(bankcode)
                         getBankFullName(bankCodes);
-                        ko.applyBindings(new TestViewModel());
+                        // ko.applyBindings(new TestViewModel());
                         // test();
                         // let test = bankNames.map(a => console.log(a))
 
@@ -91,45 +89,45 @@ require(
         // let bankNameObservable = ko.observableArray([]);
         // let emiPlanObservable = ko.observableArray([]);
 
-        function getValues(bankNames, bankCodes, emiPlans) {
-            this.bankNames = bankNames;
-            this.bankCodes = bankCodes;
-            this.emiPlans = emiPlans;
-        }
+        // function getValues(bankNames, bankCodes, emiPlans) {
+        //     this.bankNames = bankNames;
+        //     this.bankCodes = bankCodes;
+        //     this.emiPlans = emiPlans;
+        // }
 
-        function getBankFullName(bankCodes) {
-            bankCodes.map(code => getBankDetails(code))
-        }
+        // function getBankFullName(bankCodes) {
+        //     bankCodes.map(code => getBankDetails(code))
+        // }
 
-        function getBankDetails(code) {
-            // console.log(this.bankNames[code]);
-            // console.log(this.emiPlans[code]);
-            // $('.bankname').html(this.bankNames[code]);
-            bankNameObservable.push({
-                code: this.bankNames[code]
-            })
+        // function getBankDetails(code) {
+        //     // console.log(this.bankNames[code]);
+        //     // console.log(this.emiPlans[code]);
+        //     // $('.bankname').html(this.bankNames[code]);
+        //     bankNameObservable.push({
+        //         code: this.bankNames[code]
+        //     })
 
-            // console.log(bankNameObservable());
+        //     // console.log(bankNameObservable());
 
-            emiPlanObservable.push({
-                plan: this.emiPlans[code]
-            })
+        //     emiPlanObservable.push({
+        //         plan: this.emiPlans[code]
+        //     })
 
-            // console.log(emiPlanObservable);
-        }
+        //     // console.log(emiPlanObservable);
+        // }
 
 
 
-        function TestViewModel() {
-            var self = this;
-            self.bankNameObservable = ko.observableArray([]);
-            // self.emiPlanObservable = ko.observableArray([]);
-            // console.log(bankNameObservable()[0]);
-            // self.banks = bankNameObservable();
-            // self.plans = emiPlanObservable();
+        // function TestViewModel() {
+        //     var self = this;
+        //     self.bankNameObservable = ko.observableArray([]);
+        //     // self.emiPlanObservable = ko.observableArray([]);
+        //     // console.log(bankNameObservable()[0]);
+        //     // self.banks = bankNameObservable();
+        //     // self.plans = emiPlanObservable();
 
-            return self.bankNameObservable;
-        }
+        //     return self.bankNameObservable;
+        // }
 
         // function test() {
         //     console.log(bankNameObservable());
